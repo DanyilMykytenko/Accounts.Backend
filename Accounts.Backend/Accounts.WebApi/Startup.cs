@@ -2,6 +2,7 @@ using Accounts.Application;
 using Accounts.Application.Common.Mappings;
 using Accounts.Application.Interfaces;
 using Accounts.Persistence;
+using Accounts.WebApi.Middleware;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -48,6 +49,7 @@ namespace Accounts.WebApi
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseCustomExceptionHandler();
             app.UseRouting();
             app.UseHttpsRedirection();
             app.UseCors("AllowAll");
