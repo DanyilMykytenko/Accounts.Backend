@@ -15,6 +15,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using Swashbuckle.AspNetCore;
+using System.IO;
 
 namespace Accounts.WebApi
 {
@@ -51,9 +53,15 @@ namespace Accounts.WebApi
                 .AddJwtBearer("Bearer", options =>
                 {
                     options.Authority = "https://localhost:44303/";
-                    options.Audience = "NotesWebAPI";
+                    options.Audience = "AccountsWebAPI";
                     options.RequireHttpsMetadata = false;
                 });
+            services.AddSwaggerGen(config =>
+            {
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                config.IncludeXmlComments(xmlPath);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -63,6 +71,12 @@ namespace Accounts.WebApi
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseSwagger();
+            app.UseSwaggerUI(config =>
+            {
+                config.RoutePrefix = string.Empty;
+                config.SwaggerEndpoint("swagger/v1/swagger.json", "Accounts API");
+            });
             app.UseCustomExceptionHandler();
             app.UseRouting();
             app.UseHttpsRedirection();

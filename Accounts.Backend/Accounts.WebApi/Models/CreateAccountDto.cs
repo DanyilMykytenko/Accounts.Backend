@@ -3,6 +3,7 @@ using Accounts.Application.Common.Mappings;
 using AutoMapper;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,7 @@ namespace Accounts.WebApi.Models
 {
     public class CreateAccountDto : IMapWith<CreateAccountCommand>
     {
+        [Required]
         public string FullName { get; set; }
         public string Details { get; set; }
 
