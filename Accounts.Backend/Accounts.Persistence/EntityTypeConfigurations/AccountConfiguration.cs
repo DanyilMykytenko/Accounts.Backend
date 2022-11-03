@@ -8,8 +8,8 @@ namespace Accounts.Persistence.EntityTypeConfigurations
     {
         public void Configure(EntityTypeBuilder<Account> builder)
         {
-            builder.HasKey(acc => acc.AccountId);
-            builder.HasIndex(acc => acc.AccountId).IsUnique();
+            builder.HasKey(acc => acc.Id);
+            builder.HasIndex(acc => acc.Id).IsUnique();
             builder.Property(acc => acc.FullName).HasMaxLength(250);
         }
     }
