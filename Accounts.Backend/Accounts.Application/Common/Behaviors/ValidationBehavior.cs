@@ -14,9 +14,9 @@ namespace Accounts.Application.Common.Behaviors
 
         public ValidationBehavior(IEnumerable<IValidator<TRequest>> validators) =>
             _validators = validators;
-
-        public Task<TResponse> Handle(TRequest request,
-            CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
+        public Task<TResponse> Handle(TRequest request, 
+            RequestHandlerDelegate<TResponse> next, 
+            CancellationToken cancellationToken)
         {
             var context = new ValidationContext<TRequest>(request);
             var failures = _validators
@@ -26,7 +26,7 @@ namespace Accounts.Application.Common.Behaviors
                 .ToList();
             if (failures.Count != 0)
             {
-                //throw new ValidationException(failures);
+                throw new ValidationException(failures);
             }
             return next();
         }
