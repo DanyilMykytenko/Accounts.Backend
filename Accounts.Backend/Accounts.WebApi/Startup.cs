@@ -3,6 +3,7 @@ using Accounts.Application.Common.Mappings;
 using Accounts.Application.Interfaces;
 using Accounts.Persistence;
 using Accounts.WebApi.Middleware;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -40,6 +41,19 @@ namespace Accounts.WebApi
                     policy.AllowAnyOrigin();
                 });
             });
+
+            services.AddAuthentication(config =>
+            {
+                config.DefaultAuthenticateScheme =
+                    JwtBearerDefaults.AuthenticationScheme;
+                config.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+                .AddJwtBearer("Bearer", options =>
+                {
+                    options.Authority = "https://localhost:44303/";
+                    options.Audience = "NotesWebAPI";
+                    options.RequireHttpsMetadata = false;
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,8 +67,8 @@ namespace Accounts.WebApi
             app.UseRouting();
             app.UseHttpsRedirection();
             app.UseCors("AllowAll");
-
-            app.UseRouting();
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

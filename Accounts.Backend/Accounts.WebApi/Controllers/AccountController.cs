@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Accounts.Application.Accounts.Queries.GetAccountDetails;
 using AutoMapper;
 using Accounts.WebApi.Models;
+using Microsoft.AspNetCore.Authorization;
 using Accounts.Application.Accounts.Commands;
 using Accounts.Application.Accounts.Commands.UpdateAccount;
 using Accounts.Application.Accounts.Commands.DeleteAccount;
@@ -22,6 +23,7 @@ namespace Accounts.WebApi.Controllers
             _mapper = mapper;
 
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<AccountListVm>> GetAll()
         {
             var query = new GetAccountListQuery
@@ -32,6 +34,7 @@ namespace Accounts.WebApi.Controllers
             return Ok(vm);
         }
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<ActionResult<AccountDetailsVm>> Get(Guid id)
         {
             var query = new GetAccountDetailsQuery
@@ -50,6 +53,7 @@ namespace Accounts.WebApi.Controllers
             return Ok(AccountId);
         }
         [HttpPut]
+        [Authorize]
         public async Task<ActionResult> Update([FromBody] UpdateAccountDto updateAccountDto)
         {
             var command = _mapper.Map<UpdateAccountCommand>(updateAccountDto);
@@ -58,6 +62,7 @@ namespace Accounts.WebApi.Controllers
             return NoContent();
         }
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<ActionResult> Delete(Guid id)
         {
             var command = new DeleteAccountCommand
