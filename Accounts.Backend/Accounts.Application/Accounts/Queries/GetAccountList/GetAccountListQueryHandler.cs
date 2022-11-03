@@ -24,13 +24,13 @@ namespace Accounts.Application.Accounts.Queries.GetAccountList
         public async Task<AccountListVm> Handle(GetAccountListQuery request,
             CancellationToken cancellationToken)
         {
-            var accountsQuery = await _dbContext.Accounts
+            var accounts = await _dbContext.Accounts
                 .Where(account => account.UserId == request.UserId)
                 //projects our collection to assigned configuration
                 .ProjectTo<AccountLookupDto>(_mapper.ConfigurationProvider)
                 .ToListAsync(cancellationToken);
 
-            return new AccountListVm { Accounts = accountsQuery };
+            return new AccountListVm { Accounts = accounts };
         }
     }
 }

@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using Accounts.Application.Common.Exceptions;
 using Accounts.Domain;
+using Accounts.Application.Accounts.Commands.UpdateAccount;
 
 namespace Accounts.Application.Accounts.Commands.UpdateCommand
 {

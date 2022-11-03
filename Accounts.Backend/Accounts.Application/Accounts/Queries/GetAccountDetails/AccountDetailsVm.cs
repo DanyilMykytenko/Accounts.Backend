@@ -22,6 +22,16 @@ namespace Accounts.Application.Accounts.Queries.GetAccountDetails
         {
             //Map from Account class into AccountDetailsVm-class
             profile.CreateMap<Account, AccountDetailsVm>()
+                .ForMember(accountVm => accountVm.FullName,
+                    opt => opt.MapFrom(account => account.FullName))
+                .ForMember(accountVm => accountVm.Details,
+                    opt => opt.MapFrom(account => account.Details))
+                .ForMember(accountVm => accountVm.Id,
+                    opt => opt.MapFrom(account => account.Id))
+                .ForMember(accountVm => accountVm.CreationDate,
+                    opt => opt.MapFrom(account => account.CreationDate))
+                .ForMember(accountVm => accountVm.EditDate,
+                    opt => opt.MapFrom(account => account.EditDate));
         }
     }
 }

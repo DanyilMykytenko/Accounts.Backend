@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Accounts.Application.Accounts.Queries.GetAccountList
 {
-    class AccountListVm
+    public class AccountListVm
     {
+        public IList<AccountLookupDto> Accounts { get; set; }
     }
 }
