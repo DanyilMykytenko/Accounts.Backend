@@ -14,4 +14,8 @@
     <ProjectReference Include="..\Accounts.Domain\Accounts.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Accounts\Commands\DeleteAccount\" />
+  </ItemGroup>
+
 </Project>
